@@ -41,12 +41,10 @@ def chrome_new_session(show_image=True, incognito=False, proxy_server=None, ua=N
     return webdriver.Chrome(chrome_options=options)
 
 def probe(page_url):
-    open('out.txt','a').write('{"url":"%s"' % page_url.rstrip('\n'))
     driver = chrome_new_session(extensions=['wappalyzer'])
     driver.get(page_url)
-    time.sleep(2)
+    time.sleep(3)
     driver.quit()
-    open('out.txt','a').write('}\n')
 
 
 if __name__ == '__main__':

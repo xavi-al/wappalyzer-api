@@ -1,6 +1,7 @@
 from app import app
 from flask import request
 import os
+from urllib.parse import urlparse
 
 '''
 @app.before_request
@@ -32,13 +33,9 @@ def remove_duplicates(target_list):
 
 @app.route("/", methods=['POST'])
 def receive():
-    data = json.loads(request.form['json'])['appsDetected']
-    open('out.txt','a').write(', "apps": ')
-    insert_data_list = list(map(lambda d: {
-        'app': d['app'],
-        'version': d['version']
-    }, data.values()))
-    old_data = {}
-    old_data['apps'] = remove_duplicates(insert_data_list)
-    open('out.txt','a').write(str(old_data['apps']).replace("'",'"'))
+    url = json.loads(request.form['url'])['url']
+    url = urlparse(url).netloc
+    print(url)
+    data = json.loads(request.form['json'])
+    print(data)
     return 'Saved.'
